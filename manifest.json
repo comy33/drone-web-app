@@ -1,37 +1,27 @@
 {
-  "schemaVersion": 1,
-  "id": "drone-web-app",
   "name": "Drone Web Controller",
-  "description": "FastAPI-based web interface for drone telemetry and control via MAVLink",
   "version": "1.0.0",
+  "description": "FastAPI WebSocket interface for drone MAVLink telemetry and control",
   "company": "Drone School",
-  "author": "comy",
   "type": "device-integration",
-  "tags": ["drone", "mavlink", "telemetry", "control", "websocket"],
-  "readme": "https://raw.githubusercontent.com/comy33/drone-web-app/master/README.md",
-  "repository": {
-    "url": "https://github.com/comy33/drone-web-app"
-  },
-  "images": {
-    "icon": "https://raw.githubusercontent.com/comy33/drone-web-app/master/docs/icon.png"
-  },
-  "permissions": [
-    {
-      "name": "PortBindings/9999",
-      "description": "Fixed port for WebSocket communication"
-    },
-    {
-      "name": "ExtraHosts",
-      "description": "Access to host.docker.internal for MAVLink proxy"
-    }
-  ],
-  "metadata": [
-    {
-      "type": "device-integration",
-      "image": {
-        "repository": "comy33/drone-web-app",
-        "tag": "latest"
+  "repository": "https://github.com/comy33/drone-web-app",
+  "docker": {
+    "image": "comy33/drone-web-app:latest",
+    "binds": [],
+    "privileged": false,
+    "network": "bridge",
+    "ports": [
+      {
+        "containerPort": 9999,
+        "hostPort": 9999,
+        "type": "tcp"
       }
-    }
-  ]
+    ],
+    "environment": [
+      {
+        "name": "MAV_ENDPOINT",
+        "value": "udpout:host.docker.internal:14550"
+      }
+    ]
+  }
 }
